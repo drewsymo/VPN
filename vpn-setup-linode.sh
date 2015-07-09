@@ -41,7 +41,7 @@
 VPN_IP=`curl ipv4.icanhazip.com>/dev/null 2>&1`
 
 yum -y groupinstall "Development Tools"
-rpm -Uvh http://poptop.sourceforge.net/yum/stable/rhel6/pptp-release-current.noarch.rpm
+rpm -Uvh https://web.archive.org/web/20150709010553/http://poptop.sourceforge.net/yum/stable/rhel6/pptp-release-current.noarch.rpm
 yum -y install policycoreutils policycoreutils
 yum -y install ppp pptpd
 yum -y update
@@ -54,9 +54,13 @@ sysctl -p /etc/sysctl.conf
 echo "localip $VPN_LOCAL" >> /etc/pptpd.conf # Local IP address of your VPN server
 echo "remoteip $VPN_REMOTE" >> /etc/pptpd.conf # Scope for your home network
 
-echo "ms-dns 8.8.8.8" >> /etc/ppp/options.pptpd # Google DNS Primary
-echo "ms-dns 209.244.0.3" >> /etc/ppp/options.pptpd # Level3 Primary
-echo "ms-dns 208.67.222.222" >> /etc/ppp/options.pptpd # OpenDNS Primary
+echo "ms-dns 77.88.8.8" >> /etc/ppp/options.pptpd # Yandex DNS Primary //https://dns.yandex.com
+echo "ms-dns 77.88.8.1" >> /etc/ppp/options.pptpd # Yandex DNS Secondary //https://dns.yandex.com
+echo "ms-dns 8.8.8.8" >> /etc/ppp/options.pptpd # Google DNS Primary //https://developers.google.com/speed/public-dns/
+echo "ms-dns 8.8.4.4" >> /etc/ppp/options.pptpd # Google DNS Secondary //https://developers.google.com/speed/public-dns/
+echo "ms-dns 208.67.222.222" >> /etc/ppp/options.pptpd # OpenDNS DNS Primary //https://use.opendns.com/
+echo "ms-dns 208.67.220.220" >> /etc/ppp/options.pptpd # OpenDNS DNS Secondary //https://use.opendns.com/
+
 
 echo "$VPN_USER pptpd $VPN_PASS *" >> /etc/ppp/chap-secrets
 
